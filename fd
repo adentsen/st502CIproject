@@ -1,0 +1,102 @@
+
+#nuber of random samples 
+N=5000
+lambda=0.05
+
+#sample size for 30,100
+#size of random sample
+n1=10
+
+# need to do it for rate= 1, and 5
+
+#going down row =random sample size, number of column=number of random samples
+bootData<-replicate(n=15,expr=rexp(n1 ,rate=0.05))
+
+yHat=colMeans(bootData)
+
+lambdaHat=1/colMeans(bootData)
+
+#normality with estimated SE... I think it opposite
+NormalityStandardCILowerBoundarySTD=lambdaHat-(qnorm(alpha/2)*lambdaHat/sqrt(n1))
+NormalityStandardCIUpperBoundarySTD=lambdaHat+(qnorm(alpha/2)*lambdaHat/sqrt(n1))
+
+
+NormalityStandardCILowerBoundaryALT=lambdaHat/(1+(qnorm(alpha/2)/sqrt(n1)))
+NormalityStandardCIUpperBoundaryALT=lambdaHat/(1-(qnorm(alpha/2)/sqrt(n1)))
+
+
+BootstrapTInterval=
+BSlambdaHatTruth=lambdaHat
+BSlambdaHat=bootData
+SEBSlambdaHat=apply(M, 2, sd)
+
+
+#declare array
+t_type_distribution.array <- array(0, dim=c(NumberOfResample*n1,n1*NumberOfResample))
+
+
+t_ty<- array(0, dim=c(10,10))
+for (j in 1:n1){
+  for (i in 1:n1){
+  t_ty[i,j]=i+j
+    }
+  
+  }
+
+
+#t-type statistics
+NumberOfResample=200
+
+bootData2<-replicate(n=200,expr=rexp(n1 ,rate=0.05))
+
+
+lambdaHat
+lambdaHat2=1/colMeans(bootData2)
+lambdaHat2SD=sd(lambdaHat2)
+
+
+
+
+
+for (j in 1:n1){
+  
+for (i in 1:NumberOfResample){
+  
+  bootData2<-replicate(n=200,expr=rexp(n1 ,rate=0.05))
+  lambdaHat2=1/colMeans(bootData2)
+  lambdaHat2SD=sd(lambdaHat2)
+  for (k in 1:200)
+  
+t_type_distribution.array[i,j]=(lambdaHat2[i]-lambdaHat[j])/lambdaHat2SD
+
+}
+}
+
+quantile(t_type_distribution, c(.32, .57, .98)) 
+
+#####To create 200 resample and find lambdaSD
+
+bootData2<-replicate(n=200,expr=rexp(n1 ,rate=0.05))
+lambdaHat2=1/colMeans(bootData2)#the thetha j star
+lambdaHat2SD=sd(lambdaHat2)#se of the thetha j star sample
+#use this to create confidence interval for one of the thetha original sample
+
+
+
+
+XX=12
+
+#t interval for one random sample
+CreateCIsOfOneRandomSample <- function(XX) {
+  bootData2<-replicate(n=200,expr=rexp(n1 ,rate=0.05))
+  lambdaHat2=1/colMeans(bootData2)#the thetha j star
+  lambdaHat2SD=sd(lambdaHat2)#se of the thetha j star sample
+  
+  for (i in 1:200){
+  #produce t-interval
+  tInterval[i]=(lambdaHat2[i]-XX)/lambdaHat2SD
+  }
+  return(tInterval)
+}
+
+
