@@ -50,10 +50,6 @@ NumberOfResample=200
 bootData2<-replicate(n=200,expr=rexp(n1 ,rate=0.05))
 
 
-lambdaHat
-lambdaHat2=1/colMeans(bootData2)
-lambdaHat2SD=sd(lambdaHat2)
-
 
 
 
